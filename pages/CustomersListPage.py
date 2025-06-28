@@ -1,9 +1,10 @@
 from pages.BasePage import BasePage
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-class CustommersListPage(BasePage):
+class CustomersListPage(BasePage):
     url_customers_list = 'https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/list'
     customers_list_button = (By.XPATH, "//button[contains(text(), 'Customers')]")
     customer_filter = (By.XPATH, "//input[@placeholder='Search Customer']")
@@ -15,8 +16,16 @@ class CustommersListPage(BasePage):
     def click_customers_list_button(self):
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable(self.customers_list_button)).click()
 
-    def customer_filter_input(self, customer = 'Neville'):
+    def customer_filter_input(self, customer):
         WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(self.customer_filter)).send_keys(customer)
+
+    def customer_filter_results(self, customer):
+        self.customer_filter_input(customer)
+        try:
+            element = self.driver.find_element(*self.delete_button)
+            return element.is_displayed()
+        except NoSuchElementException:
+            return False
 
     def delete_custom_button(self):
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable(self.delete_button)).click()

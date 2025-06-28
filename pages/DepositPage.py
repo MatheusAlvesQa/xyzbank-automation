@@ -1,4 +1,5 @@
 from pages.BasePage import BasePage
+from utils import consts
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -7,7 +8,7 @@ class DepositPage(BasePage):
     deposit_button = (By.XPATH, "//button[contains(text(), 'Deposit')]")
     amount_deposit_input = (By.XPATH, "//input[@placeholder='amount']")
     deposit_submit_button = (By.XPATH, "//button[@type='submit' and text()='Deposit']")
-    message_confirmation_span = (By.XPATH, "//span[contains(text(), 'Deposit Successful')]") 
+    message_confirmation_span = [By.XPATH, f"//span[contains(text(), '{consts.DEPOSIT_MSG}')]"]
     
     def __init__(self, driver=None):
         super().__init__(driver)

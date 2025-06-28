@@ -5,13 +5,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 
+from utils import consts
+
+
 class OpenAccountPage(BasePage):
     url_open_account = 'https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/openAccount'
     open_account_button = (By.XPATH, "//button[contains(text(), 'Open Account')]")
     customer_name_list = (By.ID, 'userSelect')
     currency_list = (By.ID, 'currency')
     open_account_submit_button = (By.XPATH, "//button[@type='submit' and text()='Process']")
-    alert_text = 'Account created successfully'
     
     def __init__(self, driver=None):
         super().__init__(driver)
@@ -40,4 +42,4 @@ class OpenAccountPage(BasePage):
 
     def verify_alert_message(self):
         alert_message = Alert(self.driver)
-        assert self.alert_text in alert_message
+        return consts.ACCOUNT_OPENED_SUCCESSFUL_MSG in alert_message

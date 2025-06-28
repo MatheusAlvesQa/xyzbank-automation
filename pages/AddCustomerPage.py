@@ -4,6 +4,9 @@ from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from utils import consts
+
+
 class AddCustomerPage(BasePage):
     url_add_customer = 'https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/addCust'
     add_customer_button = (By.XPATH, "//button[contains(text(), 'Add Customer')]")
@@ -11,8 +14,6 @@ class AddCustomerPage(BasePage):
     last_name_input = (By.XPATH, "//input[@placeholder='Last Name']")
     post_code_input = (By.XPATH, "//input[@placeholder='Post Code']")
     add_customer_submit_button = (By.XPATH, "//button[@type='submit' and text()='Add Customer']")
-    confirmation_text_alert = 'Customer added successfully'
-    duplicated_text_alert = 'Please check the details. Customer may be duplicate.'
     
     def __init__(self, driver=None):
         super().__init__(driver)
@@ -30,10 +31,10 @@ class AddCustomerPage(BasePage):
         WebDriverWait(self.driver, 5).until(EC.url_to_be(self.url_add_customer))
         return True
 
-    def sucefull_verify_alert_message(self):
+    def successful_verify_alert_message(self):
         alert_message = Alert(self.driver)
-        assert self.confirmation_text_alert in alert_message.text
+        return consts.CUSTOMER_ADDING_CONFIRMATION_ALERT_MSG in alert_message.text
 
     def failed_verify_alert_message(self):
         alert_message = Alert(self.driver)
-        assert self.duplicated_text_alert in alert_message.text
+        return consts.CUSTOMER_ADDING_DUPLICATED_ALERT_MSG in alert_message.text
