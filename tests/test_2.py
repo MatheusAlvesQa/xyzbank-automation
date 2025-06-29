@@ -1,8 +1,10 @@
+import time
+
 from pages.WithdrawlPage import WithdrawlPage
 import pytest
 
 @pytest.mark.parametrize("login_customer", ["Hermoine Granger"], indirect=True)
-class Test1:
+class Test2:
 
     def test_customer_withdrawl(self, login_customer):
         """
